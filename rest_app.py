@@ -32,6 +32,13 @@ api.add_resource(User, '/<string:username>/remove')
 api.add_resource(Store, '/store/<string:name>')
 api.add_resource(Stores, '/stores')
 
+text = ('<p>Hello World! This is my Udemy REST API course project.</p>'
+'/stores -- to list all the stores')
+
+@app.route('/')
+def index():
+    return text
+
 if __name__ == '__main__':
     db.init_app(app)
     app.run(port=8888, debug=True)
