@@ -2,8 +2,6 @@ from flask import Flask
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 
-from db import db
-
 from resources.user import User, UserLoggin, UserRegister
 from resources.item import Item, Items
 from resources.store import Store, Stores
@@ -17,11 +15,6 @@ app.config['JWT_SECRET_Key'] = 'jose'
 app.secret_key = 'jose'
 
 api = Api(app)
-db.init_app(app)
-
-@app.before_first_request
-def create_tables():
-    db.create_all()
 
 jwt = JWTManager(app)  ## Link up with the app
 
@@ -36,9 +29,11 @@ api.add_resource(Stores, '/stores')
 text = ('<p>Hello World! This is my Udemy REST API course project.</p>'
 '/stores -- to list all the stores')
 
+
 @app.route('/')
 def index():
     return text
+
 
 if __name__ == '__main__':
     app.run(port=8888, debug=True)
