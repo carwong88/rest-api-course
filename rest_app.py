@@ -10,7 +10,15 @@ from resources.store import Store, Stores
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
+uri = os.getenv('DATABASE_URL')
+
+if uri:
+    if uri.startswith("postgres://"):
+        uri = uri.replace("postgres://", "postgresql://", 1)
+else:
+    uri = 'sqlite:///data.db'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True  ## Turns off Flask SQLAlchemy tracker; SQLAlchemy main library has it's own tracker and is better.
 app.config['JWT_SECRET_Key'] = 'jose'
