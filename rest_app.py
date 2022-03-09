@@ -17,6 +17,7 @@ app.config['JWT_SECRET_Key'] = 'jose'
 app.secret_key = 'jose'
 
 api = Api(app)
+db.init_app(app)
 
 @app.before_first_request
 def create_tables():
@@ -40,5 +41,4 @@ def index():
     return text
 
 if __name__ == '__main__':
-    db.init_app(app)
     app.run(port=8888, debug=True)
